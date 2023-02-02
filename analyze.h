@@ -16,8 +16,12 @@ void data_append( data_t *p_this, double new_value );
 double data_current( data_t *p_this );
 double data_next( data_t *p_this );
 
+int size(data_t *p_this);
+
 // Structure definitions
 struct data {
     double entries_[CAPACITY];
+    int front;
+    int rear;
 };
 #endif
