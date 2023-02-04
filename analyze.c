@@ -5,7 +5,13 @@
 // You can add other functions if you want to perform
 // other calculations independent of these functions.
 
+double vendor_col1[CAPACITY] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+double vendor_col2[CAPACITY] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+double vendor_col3[CAPACITY] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+
+
 void data_init( data_t *p_this, double step_size ) {
+    // vendor matrix
     // initialize indexes variables, step_size is only for sin
     p_this->front = 0;
     p_this->rear = 0;
