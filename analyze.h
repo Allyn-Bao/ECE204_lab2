@@ -1,7 +1,7 @@
 #ifndef CA_UWATERLOO_DWHARDER_DATA_ANAYSIS
 #define CA_UWATERLOO_DWHARDER_DATA_ANAYSIS
 
-#define CAPACITY 8
+#define CAPACITY 10
 
 // Structure declarations
 typedef struct data data_t;

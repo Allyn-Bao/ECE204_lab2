@@ -15,8 +15,6 @@ void data_init( data_t *p_this, double step_size ) {
 // allocated array.
 void data_destroy( data_t *p_this ) {
     // Your implementation here...
-    free (p_this);
-
 }
 
 void data_append( data_t *p_this, double new_value ) {
