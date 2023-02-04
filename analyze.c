@@ -11,7 +11,6 @@ double vendor_col3[CAPACITY] = { 0.618181818181818, 0.381818181818182, 0.1909090
 
 
 void data_init( data_t *p_this, double step_size ) {
-    // vendor matrix
     // initialize indexes variables, step_size is only for sin
     p_this->front = 0;
     p_this->rear = 0;
@@ -24,22 +23,42 @@ void data_destroy( data_t *p_this ) {
 }
 
 void data_append( data_t *p_this, double new_value ) {
-    // Your implementation here...
     // enqueue
     if (size(p_this) <= CAPACITY - 1) {
         p_this->entries_[p_this->rear] = new_value;
+        p_this->rear = (p_this->rear + 1) % CAPACITY;
+    } else {
+        p_this->front ++;
         p_this->rear = (p_this->rear + 1) % CAPACITY;
     }
 }
 
 double data_current( data_t *p_this ) {
-    // Your implementation here...
-    return 0.0;
+    // get approximation of the current value
+    int j = p_this->front;
+    double c = 0;
+    for (int i = 0; i < CAPACITY; i++) {
+        c = c + p_this->entries_[j] * vendor_col3[i];
+        j = (j + 1) % CAPACITY;
+    }
+    return c;
 }
 
 double data_next( data_t *p_this ) {
-    // Your implementation here...
-    return 0.0;
+    // get approximation of the next value
+    int j = p_this->front;
+    double a = 0;
+    double b = 0;
+    double c = 0;
+    double y;
+    for (int i = 0; i < CAPACITY; i++) {
+        y = p_this->entries_[j];
+        a = a + y * vendor_col1[i];
+        b = b + y * vendor_col2[i];
+        c = c + y * vendor_col3[i];
+        j = (j + 1) % CAPACITY;
+    }
+    return a + b + c;
 }
 
 int size(data_t *p_this) {
