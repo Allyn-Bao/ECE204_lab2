@@ -13,7 +13,8 @@ double vendor_col3[CAPACITY] = { 0.618181818181818, 0.381818181818182, 0.1909090
 void data_init( data_t *p_this, double step_size ) {
     // initialize indexes variables, step_size is only for sin
     p_this->front = 0;
-    p_this->rear = 0;
+    p_this->is_filled = 0;
+    p_this->index = 0;
 }
 
 // You may not need this if you do not have a dynamically
@@ -24,12 +25,15 @@ void data_destroy( data_t *p_this ) {
 
 void data_append( data_t *p_this, double new_value ) {
     // enqueue
-    if (size(p_this) <= CAPACITY - 1) {
-        p_this->entries_[p_this->rear] = new_value;
-        p_this->rear = (p_this->rear + 1) % CAPACITY;
+    if (p_this->is_filled == 0) {
+        p_this->entries_[p_this->front] = new_value;
+        p_this->front  = (p_this->front + 1) % CAPACITY;
     } else {
-        p_this->front ++;
-        p_this->rear = (p_this->rear + 1) % CAPACITY;
+        p_this->entries_[p_this->index] = new_value;
+        p_this->index ++;
+        if (p_this->index >= CAPACITY) {
+            p_this->is_filled = 1;
+        }
     }
 }
 
@@ -59,8 +63,4 @@ double data_next( data_t *p_this ) {
         j = (j + 1) % CAPACITY;
     }
     return a + b + c;
-}
-
-int size(data_t *p_this) {
-    return (CAPACITY - p_this->front + p_this->rear) % CAPACITY;
 }

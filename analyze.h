@@ -22,6 +22,7 @@ int size(data_t *p_this);
 struct data {
     double entries_[CAPACITY];
     int front;
-    int rear;
+    int is_filled;
+    int index;
 };
 #endif
