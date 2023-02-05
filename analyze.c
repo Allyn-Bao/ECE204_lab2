@@ -13,7 +13,7 @@ double vendor_col3[CAPACITY] = { 0.618181818181818, 0.381818181818182, 0.1909090
 void data_init( data_t *p_this, double step_size ) {
     // initialize indexes variables, step_size is only for sin
     p_this->front = 0;
-    p_this->rear = 0;
+    
 }
 
 // You may not need this if you do not have a dynamically
@@ -24,29 +24,28 @@ void data_destroy( data_t *p_this ) {
 
 void data_append( data_t *p_this, double new_value ) {
     // enqueue
-    if (size(p_this) <= CAPACITY - 1) {
-        p_this->entries_[p_this->rear] = new_value;
-        p_this->rear = (p_this->rear + 1) % CAPACITY;
-    } else {
-        p_this->front ++;
-        p_this->rear = (p_this->rear + 1) % CAPACITY;
-    }
+    p_this->entries_[p_this->front] = new_value;
+    p_this->front  = (p_this->front + 1) % CAPACITY;
 }
 
 double data_current( data_t *p_this ) {
     // get approximation of the current value
-    int j = p_this->front;
+    int j = p_this->front-1;
     double c = 0;
     for (int i = 0; i < CAPACITY; i++) {
-        c = c + p_this->entries_[j] * vendor_col3[i];
-        j = (j + 1) % CAPACITY;
+        c = c + (p_this->entries_[j] * vendor_col3[i]);
+        j = (j - 1) % CAPACITY;
+
+        if (j < 0) {
+            j = CAPACITY-1;
+        }
     }
     return c;
 }
 
 double data_next( data_t *p_this ) {
     // get approximation of the next value
-    int j = p_this->front;
+    int j = p_this->front-1;
     double a = 0;
     double b = 0;
     double c = 0;
@@ -56,11 +55,11 @@ double data_next( data_t *p_this ) {
         a = a + y * vendor_col1[i];
         b = b + y * vendor_col2[i];
         c = c + y * vendor_col3[i];
-        j = (j + 1) % CAPACITY;
+        j = (j - 1) % CAPACITY;
+
+        if (j < 0) {
+            j = CAPACITY-1;
+        }
     }
     return a + b + c;
-}
-
-int size(data_t *p_this) {
-    return (CAPACITY - p_this->front + p_this->rear) % CAPACITY;
 }
