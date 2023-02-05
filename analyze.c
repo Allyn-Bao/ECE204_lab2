@@ -30,10 +30,15 @@ void data_append( data_t *p_this, double new_value ) {
 
 double data_current( data_t *p_this ) {
     // get approximation of the current value
-    int j = p_this->front-1;
+    int j;
+    if( p_this->front == 0) 
+        j = CAPACITY-1;
+    else
+        j = p_this->front-1;
+
     double c = 0;
     for (int i = 0; i < CAPACITY; i++) {
-        c = c + (p_this->entries_[j] * vendor_col3[i]);
+        c += (p_this->entries_[j] * vendor_col3[i]);
         j = (j - 1) % CAPACITY;
 
         if (j < 0) {
@@ -45,7 +50,12 @@ double data_current( data_t *p_this ) {
 
 double data_next( data_t *p_this ) {
     // get approximation of the next value
-    int j = p_this->front-1;
+    int j;
+    if( p_this->front == 0) 
+        j = CAPACITY-1;
+    else
+        j = p_this->front-1;
+
     double a = 0;
     double b = 0;
     double c = 0;
