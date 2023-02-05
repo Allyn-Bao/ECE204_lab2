@@ -13,7 +13,7 @@ double vendor_col3[CAPACITY] = { 0.618181818181818, 0.381818181818182, 0.1909090
 void data_init( data_t *p_this, double step_size ) {
     // initialize indexes variables, step_size is only for sin
     p_this->front = 0;
-    
+
 }
 
 // You may not need this if you do not have a dynamically
